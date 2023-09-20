@@ -2,7 +2,9 @@
 
 
 ## Semantic Versioning
+
 This project ius going to use Sematic versioning for its tagging    [Semver.org](https://semver.org/)   
+
 The general Format:
 **MAJOR.MINOR.PATCH**, eg. `1.0.1`  
 
