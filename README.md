@@ -264,9 +264,9 @@ git stash save
 
 git checkout {branch name}
 
-git statsh change apply
+git stash apply
 ```
-
+We have automated the generation of the terraform cloud token with a bash script  [./bin/generate_trfc_credentials](./bin/generate_tfrc_credentials) 
 ## References 
 - [Linux Version](https://linuxize.com/post/how-to-check-linux-version/)    
 - [Terraform Installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
