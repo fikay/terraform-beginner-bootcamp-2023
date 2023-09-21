@@ -225,6 +225,48 @@ If the file is lost, you lose knowing the state of your infrastructure.
 
 #### Terraform Directory
 It contains binaries of terraform providers 
+
+## Terraform Cloud
+[Terraform Cloud](https://app.terraform.io/) Having created an account in terraform cloud,  We had to create a project and a workspace inside the project    
+- **Project** - A collection of related Terraform configurations.   
+- **Workspace** - An isolated environment within a project for managing infrastructure configurations.
+
+Terraform cloud was added to the infastructure using the following code:
+```
+terraform {
+  cloud {
+    organization = "FaksOrg"
+
+    workspaces {
+      name = "terra-house-1"
+    }
+  }
+}
+```
+#### CLI Driven runs
+After including the code into the infastructure, we had to login to the cloud from the CLI
+
+`terraform login`
+
+An API token was then generated from a browser and stored in
+```
+ /home/gitpod/.terraform.d/credentials.tfrc.json
+```
+
+After the token was generated, we used the command `terraform init` to initialize the workspace and `terraform apply` to start the first run with the workspace.
+
+N:B If you are working in main branch and want to take the changes made to a new branch, run the following commands:
+```
+git pull
+git fetch
+git add .
+git stash save
+
+git checkout {branch name}
+
+git statsh change apply
+```
+
 ## References 
 - [Linux Version](https://linuxize.com/post/how-to-check-linux-version/)    
 - [Terraform Installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
