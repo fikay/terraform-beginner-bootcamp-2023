@@ -200,9 +200,17 @@ To have it automatically apply the changes, we use the command:
 ```
 terraform apply --auto-approve
 ```
+#### Terraform Destroy
+`terraform destroy`     
+This will destroy resources which have been created by the terraform apply command. 
+
+It also prompts for an approve input but this can be skipped by using the flag :
+```
+terraform destroy --auto-approve
+```
 
 ### Terraform Lock Files
-`terraform/lock.hcl`  conntains the locked versioning for the providers or moodules that should be used with this project.
+`terraform/lock.hcl`  conntains the locked versioning for the providers or moodules that should be used with this project. If a new provider is included, the `terraform init` command should be used in order to include the new provider in the lock file
 
 The terraform lock file should be committed to the version control system eg. Github
 
