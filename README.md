@@ -145,6 +145,28 @@ We can persist env vars into gitpod by storing them in Gitpod Secrets storage.
 gp env HELLO = 'world'
 ```
 All future workspaces launched will set the env vars for all bash terminal opened in those workspaces.
+
+## AWS CLI installation
+AWS CLI is installed for this project via the bash script [`./bin/install_aws_cli`](./bin/install_aws_cli)
+
+[Install AWS CLI](https://docs.aws.amazon.com/cli/v1/userguide/install-linux.html)
+
+[AWS CLI Env Vars](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
+
+We can check to see if our AWS credentials is configured correctly by running:
+```sh
+aws sts get-caller-identity
+```
+If successful you should see a json payload that looks like this:
+
+```json
+    "UserId": "AIKF4Y2OCNAGIIGDI5BMW",
+    "Account": "123548679984",
+    "Arn": "arn:aws:iam::123548679984:user/Fikayo_terraform"
+```
+
+We had to make an AWS User and generate access tokens for the user 
+
 ## References 
 - [Linux Version](https://linuxize.com/post/how-to-check-linux-version/)    
 - [Terraform Installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
