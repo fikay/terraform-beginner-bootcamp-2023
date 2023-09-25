@@ -1,5 +1,10 @@
 # Terraform Beginner Bootcamp 2023
 
+## Table of Content
+ - [Semantic Versioning](#semantic-versioning) 
+ - [Consideration for Linux Distribution](#consideration-for-linux-distribution) 
+ - [Install Terraform](#install-terraform-cli) 
+ - [Refactoring into Bash Scripts](#refactoring-into-bash-scripts)
 
 ## Semantic Versioning
 
