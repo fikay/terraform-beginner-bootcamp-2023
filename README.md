@@ -3,7 +3,8 @@
 
 
 ## WEEKLY JOURNALS
- - [Week 0 Journal](Journal/Week-0.md) 
+ - [Week 0 Journal](Journal/Week-0.md)
+ - [Week 1 Journal](Journal/Week-1.md)
 
 
 ## EXTRAS
