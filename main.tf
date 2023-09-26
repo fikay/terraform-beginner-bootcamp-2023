@@ -8,4 +8,7 @@ module "terrahouse_aws" {
   source = "./modules/terrahouse_aws"
   UserUuid = var.UserUuid
   bucket_Name = var.bucket_Name
+  index_html_filepath = var.index_html_filepath
+  error_html_filepath = var.error_html_filepath
+
 }

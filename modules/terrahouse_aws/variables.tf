@@ -17,3 +17,24 @@ variable "bucket_Name" {
     error_message = "The 'example_string' variable must not be an empty string."
   }
 }
+
+variable "index_html_filepath" {
+  type        = string
+  description = "Path to the index.html file"
+
+  validation {
+    condition     = fileexists(var.index_html_filepath)
+    error_message = "The specified 'index_html_filepath' does not exist or is not a valid file path."
+  }
+}
+
+
+variable "error_html_filepath" {
+  type        = string
+  description = "Path to the error.html file"
+
+  validation {
+    condition     = fileexists(var.error_html_filepath)
+    error_message = "The specified 'error_html_filepath' does not exist or is not a valid file path."
+  }
+}
