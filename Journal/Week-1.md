@@ -62,3 +62,38 @@ terraform import aws_s3_bucket.bucket bucket-name
 
 ### Fix manual configuration
 If any changes were made to our cloud infastructure through ClickOps, running `terraform plan`, terraform will attempt to put our infastructure back into the expected state ficing configuration drift.
+
+### Fix using Terraform Refresh
+
+```tf
+terraform apply -refresh-only -auto-approve
+```
+## Terrafom Modules
+It is recommmended to place modules in a `modules` directory when locally developing modules but you can name the modules to anything you want
+### Modules sources
+
+Using the source we can import the source from various places eg:   
+-Locally    
+-GitHub     
+-Terraform Registry
+
+```tf
+module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+}
+```
+#### Passing input Variables
+To pass in input Variables to the module we include this in the module and make sure the variables are defined in the modules `variables.tf` and the main `variables.tf`
+
+N:B We do not need to apply the conditions in the main `vatriables.tf` as validation is already being done in the module.
+
+```tf
+module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+  UserUuid = var.UserUuid
+  bucket_Name = var.bucket_Name
+}
+```
+
+
+[Modules sources](https://developer.hashicorp.com/terraform/language/modules/sources)
