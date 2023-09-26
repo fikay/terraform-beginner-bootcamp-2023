@@ -48,3 +48,17 @@ In terraform we cans et two kinds of variables:
 
  ### Order of terraform variables
  TODO: Document which terraform variables take precedence
+
+ ### Fix missing Resources with Terraform Import 
+We found ways to restore our terraform state file if it gets lost by using the import block to import our s3 bucket from aws 
+
+N:B **This command might not work for all AWS services**
+
+```
+terraform import aws_s3_bucket.bucket bucket-name
+```
+
+[Import for S3 Buckets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import)
+
+### Fix manual configuration
+If any changes were made to our cloud infastructure through ClickOps, running `terraform plan`, terraform will attempt to put our infastructure back into the expected state ficing configuration drift.
