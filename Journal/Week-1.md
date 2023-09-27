@@ -151,3 +151,60 @@ variable "index_html_filepath" {
 Function that hashes the contents of a given file rather than a literal string.
 
 [Filemd5](https://developer.hashicorp.com/terraform/language/functions/filemd5)
+
+## Terraform Locals
+A local value assigns a name to an expression, so you can use the name multiple times within a module instead of repeating the expression.
+```
+locals  {
+  s3_origin_id = "MyS3Origin"
+}
+
+```
+[Local Values](https://developer.hashicorp.com/terraform/language/values/locals)
+## Terraform Data Sources
+This allows us to source data from cloud resources.
+
+This is ueseful when we want to reference cloud resources without importing them.
+
+```tf
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+
+```
+
+[Data Sources](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity)
+
+## Working with JSON
+We use the json encode to create the json policy inline in the hcl
+```
+> jsonencode({"hello"="world"})
+{"hello":"world"}
+
+```
+[Json Encode](https://developer.hashicorp.com/terraform/language/functions/jsonencode)
+
+
+### Discovery 
+After setting up the cloudFront, we tried to load up the website but Distribution domain name kept downloading the file.   
+This was a result of not specifying the content type in the Object.
+
+```tf
+esource "aws_s3_object" "error_html" {
+  bucket = aws_s3_bucket.website_Bucket.bucket
+  key    = "error.html"         # Specify the key (path) in the bucket
+  source = var.error_html_filepath
+  content_type = "text/html"
+
+  # The filemd5() function is available in Terraform 0.11.12 and later
+  # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
+  # etag = "${md5(file("path/to/file"))}"
+  etag = filemd5(var.error_html_filepath)
+}
+```
+
+Once that was specified, we went into the cloudFront invalidations and cleared out the cache using `/*` for it to then work.
+
+N.B Make sure the pages are valid HTML
