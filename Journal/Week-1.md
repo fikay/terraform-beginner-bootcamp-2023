@@ -208,3 +208,12 @@ esource "aws_s3_object" "error_html" {
 Once that was specified, we went into the cloudFront invalidations and cleared out the cache using `/*` for it to then work.
 
 N.B Make sure the pages are valid HTML
+
+### Changing the lifecycle of Resources
+
+[Meta Arguments Lifecycle](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle)
+
+## Terraform Data
+Plain data values such as Local Values and Input Variables don't have any side-effects to plan against and so they aren't valid in replace_triggered_by. You can use terraform_data's behavior of planning an action each time input changes to indirectly use a plain value to trigger replacement.
+
+[Terraform Data](https://developer.hashicorp.com/terraform/language/resources/terraform-data)
