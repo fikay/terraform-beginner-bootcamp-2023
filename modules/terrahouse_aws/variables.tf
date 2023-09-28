@@ -49,3 +49,13 @@ variable "content_version" {
     error_message = "content_version must be a positive integer starting at 1"
   }
 }
+
+variable "assets_path" {
+  type        = string
+  description = "Path to the assets folder"
+
+  # validation {
+  #   condition     = fileexists(var.assets_path)
+  #   error_message = "The specified 'error_html_filepath' does not exist or is not a valid file path."
+  # }
+}

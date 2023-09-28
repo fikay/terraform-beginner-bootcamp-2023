@@ -265,3 +265,19 @@ resource "aws_instance" "web" {
 }
 
 ```
+
+## For Each Expressions
+
+For each allows us to enumerate over complex data types.
+```
+# my_buckets.tf
+module "bucket" {
+  for_each = toset(["assets", "media"])
+  source   = "./publish_bucket"
+  name     = "${each.key}_bucket"
+}
+
+```
+
+Mostly useful when you are creating multiples of a cloud resource and you want to reduce the amount of repetitive terraform code.
+[For each](https://developer.hashicorp.com/terraform/language/meta-arguments/for_each)
