@@ -21,6 +21,24 @@ resource "aws_s3_bucket_website_configuration" "static_website" {
   }
 }
 
+resource "aws_s3_object" "upload_assets" {
+  for_each = fileset(var.assets_path, "*.{jpg, png, gif}")
+    bucket = aws_s3_bucket.website_Bucket.bucket
+    key    = "assets/${each.key}"         # Specify the key (path) in the bucket
+    source = "${path.root}/public/assets/${each.key}"
+    #content_type = "text/html"
+
+  
+  # The filemd5() function is available in Terraform 0.11.12 and later
+  # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
+  # etag = "${md5(file("path/to/file"))}"
+  etag = filemd5("${path.root}/public/assets/${each.key}")
+  lifecycle {
+    replace_triggered_by = [terraform_data.content_version.output]
+    ignore_changes = [etag]
+  }
+}
+
 
 resource "aws_s3_object" "index_html" {
   bucket = aws_s3_bucket.website_Bucket.bucket
@@ -28,6 +46,7 @@ resource "aws_s3_object" "index_html" {
   source = var.index_html_filepath
   content_type = "text/html"
 
+  
   # The filemd5() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
   # etag = "${md5(file("path/to/file"))}"
