@@ -26,7 +26,7 @@ resource "aws_s3_bucket_website_configuration" "static_website" {
 resource "aws_s3_object" "index_html" {
   bucket = aws_s3_bucket.website_Bucket.bucket
   key    = "index.html"         # Specify the key (path) in the bucket
-  source = "${path.root}${var.index_html_filepath}"
+  source = "${var.index_html_filepath}"
   content_type = "text/html"
 
   # The filemd5() function is available in Terraform 0.11.12 and later
@@ -38,7 +38,7 @@ resource "aws_s3_object" "index_html" {
 resource "aws_s3_object" "error_html" {
   bucket = aws_s3_bucket.website_Bucket.bucket
   key    = "error.html"         # Specify the key (path) in the bucket
-  source = "${path.root}${var.error_html_filepath}"
+  source = "${var.error_html_filepath}"
   content_type = "text/html"
 
   # The filemd5() function is available in Terraform 0.11.12 and later
