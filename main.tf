@@ -1,7 +1,13 @@
 
 
 terraform {
-  
+  cloud {
+    organization = "FaksOrg"
+
+    workspaces {
+      name = "terraform-cloud"
+    }
+  }
 }
 
 module "terrahouse_aws" {
