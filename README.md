@@ -5,6 +5,7 @@
 ## WEEKLY JOURNALS
  - [Week 0 Journal](Journal/Week-0.md)
  - [Week 1 Journal](Journal/Week-1.md)
+ - [Week 2 Journal](Journal/Week-2.md)
 
 
 ## EXTRAS
