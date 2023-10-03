@@ -3,22 +3,45 @@ require 'json'
 require 'pry'
 require 'active_model'
 
+# We will mock having a state or database for this development server by setting a global variable. You would never use a global variable in a production server
 $home = {}
 
+# This i s a ruby class that includes validations from ActiveRecord
+# This will represent our home resources as a ruby object
 class Home
+  # Active model is part of Ruby on rails
+  #It is used as an ORM. It has a module within Active model that provides validation
+  # The production Terratowns server is rails and uses very similar and in most cases identitcal validation
   include ActiveModel::Validations
+
+  # Create some virtual attributes to store on this object
+  # This will set a getter and setter
+  # home = new Home()
+  # home.town = 'hello'
+  # home.town()
   attr_accessor :town, :name, :description, :domain_name, :content_version
 
-  validates :town, presence: true
+  validates :town, presence: true, inclusion: {in: [
+    'cooker-cove',
+    'melomaniac-mansion',
+    'video-valley',
+    'the-nomad-pad',
+    'gamers-grotto'
+  ] }
+
+  #Visible to all users
   validates :name, presence: true
   validates :description, presence: true
+  # we want to lock this down to only be from cloudfront
   validates :domain_name, 
     format: { with: /\.cloudfront\.net\z/, message: "domain must be from .cloudfront.net" }
     # uniqueness: true, 
-
+# content version has to be an integer
+# We will make sure it is an incremental version in the controller
   validates :content_version, numericality: { only_integer: true }
 end
 
+# We are extending a class from Sinatra:: Base to turn this generic class to utilize the sinatra framework
 class TerraTownsMockServer < Sinatra::Base
 
   def error code, message
@@ -38,7 +61,7 @@ class TerraTownsMockServer < Sinatra::Base
       error 406, "expected Accept header to be application/json"
     end
   end
-
+  #Return hardcoded access token
   def x_access_code
     '9b49b3fb-b8e9-483c-b703-97ba88eef8e0'
   end
@@ -49,19 +72,23 @@ class TerraTownsMockServer < Sinatra::Base
 
   def find_user_by_bearer_token
     auth_header = request.env["HTTP_AUTHORIZATION"]
+    # Check if authorization header exists
     if auth_header.nil? || !auth_header.start_with?("Bearer ")
       error 401, "a1000 Failed to authenicate, bearer token invalid and/or teacherseat_user_uuid invalid"
     end
-
+    # Does token match the one in our database
+    # If we can't find it then return an error or if it doesn't match
+    # code = access_code = token
     code = auth_header.split("Bearer ")[1]
     if code != x_access_code
       error 401, "a1001 Failed to authenicate, bearer token invalid and/or teacherseat_user_uuid invalid"
     end
 
+    # Is there a user_uuid in th ebody payload json?
     if params['user_uuid'].nil?
       error 401, "a1002 Failed to authenicate, bearer token invalid and/or teacherseat_user_uuid invalid"
     end
-
+    # code an duser_uuid should be matching for user
     unless code == x_access_code && params['user_uuid'] == x_user_uuid
       error 401, "a1003 Failed to authenicate, bearer token invalid and/or teacherseat_user_uuid invalid"
     end
@@ -71,14 +98,17 @@ class TerraTownsMockServer < Sinatra::Base
   post '/api/u/:user_uuid/homes' do
     ensure_correct_headings
     find_user_by_bearer_token
+    # Prints to the terminal 
     puts "# create - POST /api/homes"
 
+      # same as a try/catch
     begin
+      #Sinatra does not automaticaly parse json body as params like rails so we need to manually parse it
       payload = JSON.parse(request.body.read)
     rescue JSON::ParserError
       halt 422, "Malformed JSON"
     end
-
+    # Assign payload to variables 
     # Validate payload data
     name = payload["name"]
     description = payload["description"]
@@ -86,12 +116,14 @@ class TerraTownsMockServer < Sinatra::Base
     content_version = payload["content_version"]
     town = payload["town"]
 
+    #Print out to the console
     puts "name #{name}"
     puts "description #{description}"
     puts "domain_name #{domain_name}"
     puts "content_version #{content_version}"
     puts "town #{town}"
 
+    # Create a new home model and set attributes 
     home = Home.new
     home.town = town
     home.name = name
@@ -99,12 +131,14 @@ class TerraTownsMockServer < Sinatra::Base
     home.domain_name = domain_name
     home.content_version = content_version
     
+    # Ensure validation checks pass otherwise return the errors 
     unless home.valid?
       error 422, home.errors.messages.to_json
     end
 
     uuid = SecureRandom.uuid
     puts "uuid #{uuid}"
+    # Mock our data to our mock Database whicxh is just a global variable
     $home = {
       uuid: uuid,
       name: name,
@@ -113,7 +147,7 @@ class TerraTownsMockServer < Sinatra::Base
       domain_name: domain_name,
       content_version: content_version
     }
-
+    # return uuid
     return { uuid: uuid }.to_json
   end
 
