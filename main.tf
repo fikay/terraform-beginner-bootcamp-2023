@@ -9,20 +9,20 @@ terraform {
   }
 }
 provider "terratowns"{
-  endpoint = "http://localhost:4567/api"
-  user_uuid="e328f4ab-b99f-421c-84c9-4ccea042c7d1" 
-  token="9b49b3fb-b8e9-483c-b703-97ba88eef8e0"
+  endpoint = var.terratowns_endpoint
+  user_uuid=var.teacherseat_user_uuid
+  token=var.terratowns_access_token
 }
-# module "terrahouse_aws" {
-#   source = "./modules/terrahouse_aws"
-#   UserUuid = var.UserUuid
-#   bucket_Name = var.bucket_Name
-#   index_html_filepath = var.index_html_filepath
-#   error_html_filepath = var.error_html_filepath
-#   content_version = var.content_version
-#   assets_path = var.assets_path
+module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+  UserUuid = var.teacherseat_user_uuid
+  bucket_Name = var.bucket_Name
+  index_html_filepath = var.index_html_filepath
+  error_html_filepath = var.error_html_filepath
+  content_version = var.content_version
+  assets_path = var.assets_path
 
-# }
+}
 
 
 resource "terratowns_home" "home"{
@@ -32,7 +32,7 @@ resource "terratowns_home" "home"{
   signature Titans (large combat mechs). Instead, 
   Apex Legends focuses on squad-based gameplay and character-driven action.
   Description
-  domain_name = "56646gcd.cloudfront.net"
+  domain_name = module.terrahouse_aws.cloudfront_domain
   town = "gamers-grotto"
   content_version = 1
 }
