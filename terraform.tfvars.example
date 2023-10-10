@@ -1,6 +1,20 @@
 bucket_Name = "hk6s3l918vea7uivk91mgrogia7pjahk"
-index_html_filepath = "/workspace/terraform-beginner-bootcamp-2023/public/index.html"
-error_html_filepath = "/workspace/terraform-beginner-bootcamp-2023/public/error.html"
+index_html_filepath = "/workspace/terraform-beginner-bootcamp-2023/public/Gaming/index.html"
+error_html_filepath = "/workspace/terraform-beginner-bootcamp-2023/public/Gaming/error.html"
 content_version = 1
-assets_path = "${path.root}/public/assets"
+gaming_content_version = 1
+movies_content_version = 1
+assets_path = "./public/Gaming/assets"
 terratowns_endpoint = "https://terratowns.cloud/api"
+Apex_public_path = "/workspace/terraform-beginner-bootcamp-2023/public/Gaming"
+movies_public_path = "/workspace/terraform-beginner-bootcamp-2023/public/Movies"
+
+movies ={
+    public_path = "/workspace/terraform-beginner-bootcamp-2023/public/Movies"
+    content_version=1
+}
+
+gaming = {
+         public_path =  "/workspace/terraform-beginner-bootcamp-2023/public/Gaming"
+        content_version=1
+}
