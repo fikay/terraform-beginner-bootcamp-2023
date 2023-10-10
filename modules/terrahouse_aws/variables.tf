@@ -1,3 +1,11 @@
+variable "public_path" {
+  type        = string
+  description = "File path for public Directory"
+
+}
+
+
+
 variable "UserUuid" {
   type        = string
   description = "The UUID of the user."
@@ -19,26 +27,26 @@ variable "bucket_Name" {
   }
 }
 
-variable "index_html_filepath" {
-  type        = string
-  description = "Path to the index.html file"
+# variable "index_html_filepath" {
+#   type        = string
+#   description = "Path to the index.html file"
 
-  validation {
-    condition     = fileexists(var.index_html_filepath)
-    error_message = "The specified 'index_html_filepath' does not exist or is not a valid file path."
-  }
-}
+#   validation {
+#     condition     = fileexists(var.index_html_filepath)
+#     error_message = "The specified 'index_html_filepath' does not exist or is not a valid file path."
+#   }
+# }
 
 
-variable "error_html_filepath" {
-  type        = string
-  description = "Path to the error.html file"
+# variable "error_html_filepath" {
+#   type        = string
+#   description = "Path to the error.html file"
 
-  validation {
-    condition     = fileexists(var.error_html_filepath)
-    error_message = "The specified 'error_html_filepath' does not exist or is not a valid file path."
-  }
-}
+#   validation {
+#     condition     = fileexists(var.error_html_filepath)
+#     error_message = "The specified 'error_html_filepath' does not exist or is not a valid file path."
+#   }
+# }
 
 variable "content_version" {
   description = "The content version (positive integer starting at 1)"
@@ -51,12 +59,12 @@ variable "content_version" {
   }
 }
 
-variable "assets_path" {
-  type        = string
-  description = "Path to the assets folder"
+# variable "assets_path" {
+#   type        = string
+#   description = "Path to the assets folder"
 
-  # validation {
-  #   condition     = fileexists(var.assets_path)
-  #   error_message = "The specified 'error_html_filepath' does not exist or is not a valid file path."
-  # }
-}
+#   # validation {
+#   #   condition     = fileexists(var.assets_path)
+#   #   error_message = "The specified 'error_html_filepath' does not exist or is not a valid file path."
+#   # }
+# }

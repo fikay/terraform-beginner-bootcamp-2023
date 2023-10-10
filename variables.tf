@@ -22,6 +22,14 @@ variable "content_version" {
   type        = number
 }
 
+variable "movies_content_version" {
+  type        = number
+}
+
+variable "gaming_content_version" {
+  type        = number
+}
+
 variable "assets_path" {
   type = string
   
@@ -29,4 +37,26 @@ variable "assets_path" {
 
 variable "terratowns_endpoint" {
    type = string
+}
+
+variable "Apex_public_path" {
+   type = string
+}
+
+variable "movies_public_path" {
+   type = string
+}
+
+variable "movies" {
+  type = object({
+     public_path= string,
+     content_version = number
+  }) 
+}
+
+variable "gaming" {
+  type = object({
+     public_path= string,
+     content_version = number
+  }) 
 }
