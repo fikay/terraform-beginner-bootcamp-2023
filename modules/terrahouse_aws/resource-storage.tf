@@ -22,7 +22,7 @@ resource "aws_s3_bucket_website_configuration" "static_website" {
 }
 
 resource "aws_s3_object" "upload_assets" {
-  for_each = fileset("${var.public_path}/assets", "*.{jpg, png, gif}")
+  for_each = fileset("${var.public_path}/assets", "*.{jpg, png, gif,webp,jpeg}")
     bucket = aws_s3_bucket.website_Bucket.bucket
     key    = "assets/${each.key}"         # Specify the key (path) in the bucket
     source = "${var.public_path}/assets/${each.key}"
